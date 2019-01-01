@@ -29,18 +29,18 @@ In a nutshell here's how to use this template, so **for example** assume you wan
     class VGGModel(BaseModel):
         def __init__(self, config):
             super(VGGModel, self).__init__(config)
-            #call the build_model and init_saver functions.
-            self.build_model() 
-            self.init_saver() 
+            build_graph
+            self.build_graph() 
+            self.saver() 
   ```
-- Override these two functions "build_model" where you implement the vgg model, and "init_saver" where you define a tensorflow saver, then call them in the initalizer.
+- Override these two functions "build_graph" where you implement the vgg model, and "saver" where you define a tensorflow saver, then call them in the initalizer.
     
 ```python
-     def build_model(self):
+     def build_graph(self):
         # here you build the tensorflow graph of any model you want and also define the loss.
         pass
             
-     def init_saver(self):
+     def saver(self):
         # here you initalize the tensorflow saver that will be used in saving the checkpoints.
         self.saver = tf.train.Saver(max_to_keep=self.config.max_to_keep)
 
@@ -153,9 +153,9 @@ Folder structure
     Here's where you implement your model.
     So you should :
     - Create your model class and inherit the base_model class
-    - override "build_model" where you write the tensorflow model you want
+    - override "build_graph" where you write the tensorflow model you want
     - override "init_save" where you create a tensorflow saver to use it to save and load checkpoint
-    - call the "build_model" and "init_saver" in the initializer.
+    - call the "build_graph" and "saver" in the initializer.
 
 ### Trainer
 --------------

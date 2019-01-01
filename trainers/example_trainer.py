@@ -18,7 +18,7 @@ class ExampleTrainer(BaseTrain):
         loss = np.mean(losses)
         acc = np.mean(accs)
 
-        cur_it = self.model.global_step_tensor.eval(self.sess)
+        cur_it = self.model.global_step.eval(self.sess)
         summaries_dict = {
             'loss': loss,
             'acc': acc,
@@ -28,7 +28,7 @@ class ExampleTrainer(BaseTrain):
 
     def train_step(self):
         batch_x, batch_y = next(self.data.next_batch(self.config.batch_size))
-        feed_dict = {self.model.x: batch_x, self.model.y: batch_y, self.model.is_training: True}
-        _, loss, acc = self.sess.run([self.model.train_step, self.model.cross_entropy, self.model.accuracy],
+        feed_dict = {self.model.x: batch_x, self.model.y: batch_y}
+        _, loss, acc = self.sess.run([self.model.optimize, self.model.loss, self.model.accuracy],
                                      feed_dict=feed_dict)
         return loss, acc

@@ -12,9 +12,9 @@ class BaseTrain:
         self.sess.run(self.init)
 
     def train(self):
-        for cur_epoch in range(self.model.cur_epoch_tensor.eval(self.sess), self.config.num_epochs + 1, 1):
+        for cur_epoch in range(self.model.cur_epoch.eval(self.sess), self.config.num_epochs + 1, 1):
             self.train_epoch()
-            self.sess.run(self.model.increment_cur_epoch_tensor)
+            self.sess.run(self.model.incr_cur_epoch_op)
 
     def train_epoch(self):
         """

@@ -5,5 +5,6 @@
   "learning_rate": 0.001,
   "batch_size": 16,
   "state_size": [784],
-  "max_to_keep":5
+  "max_to_keep":5,
+  "seed":1
 }

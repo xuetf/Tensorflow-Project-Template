@@ -23,20 +23,23 @@ def main():
     # create the experiments dirs
     create_dirs([config.summary_dir, config.checkpoint_dir])
     # create tensorflow session
-    sess = tf.Session()
+
     # create your data generator
     data = DataGenerator(config)
-    
+
+    graph = tf.Graph()
     # create an instance of the model you want
-    model = ExampleModel(config)
-    # create tensorboard logger
-    logger = Logger(sess, config)
-    # create trainer and pass all the previous components to it
-    trainer = ExampleTrainer(sess, model, data, config, logger)
-    #load model if exists
-    model.load(sess)
-    # here you train your model
-    trainer.train()
+    with graph.as_default():
+        sess = tf.Session(graph=graph)
+        model = ExampleModel(config)
+        # create tensorboard logger
+        logger = Logger(sess, config)
+        # create trainer and pass all the previous components to it
+        trainer = ExampleTrainer(sess, model, data, config, logger)
+        #load model if exists
+        model.load(sess)
+        # here you train your model
+        trainer.train()
 
 
 if __name__ == '__main__':
