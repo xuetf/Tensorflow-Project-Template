@@ -5,7 +5,9 @@ from utils.scope_decorator import define_scope
 class BaseModel:
     def __init__(self, config):
         self.config = config
-        self.build_model() # common build procedure
+        self.build_model() # common build procedure: set seed, step, epoch, build graph and initialize parameters
+        self.loaded = False # check whether loading model successfully
+
 
     def build_model(self):
         """All the variable you want to save should be under the `self.graph`."""
@@ -21,9 +23,8 @@ class BaseModel:
         # build graph, override by subclass
         self.build_graph()
 
-        # init saver, must be putted after the build_graph
+        # init saver, must be put after the build_graph
         self.saver
-
 
 
     # set random seed both for tensorflow and numpy
@@ -39,11 +40,13 @@ class BaseModel:
 
     # load latest checkpoint from the experiment path defined in the config file
     def load(self, sess):
+        '''make sure you can't call the global variables init after calling this method'''
         latest_checkpoint = tf.train.latest_checkpoint(self.config.checkpoint_dir)
         if latest_checkpoint:
             print("Loading model checkpoint {} ...\n".format(latest_checkpoint))
             self.saver.restore(sess, latest_checkpoint)
             print("Model loaded")
+            self.loaded = True
 
 
     # just initialize a tensorflow variable to use it as epoch counter

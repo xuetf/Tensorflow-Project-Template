@@ -9,8 +9,8 @@ class ExampleModel(BaseModel):
 
 
     def build_graph(self):
-        self.x = tf.placeholder(tf.float32, shape=[None] + self.config.state_size, name='input')
-        self.y = tf.placeholder(tf.float32, shape=[None, 10], name='label')
+        self.x = tf.placeholder(tf.float32, shape=[None, self.config.state_size], name='input')
+        self.y = tf.placeholder(tf.float32, shape=[None, self.config.label_num], name='label')
 
         self.loss
         self.optimize

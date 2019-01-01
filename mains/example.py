@@ -1,11 +1,10 @@
 import tensorflow as tf
 
-from data_loader.data_generator import DataGenerator
+from data_loader.random_generator import RandomGenerator
+from data_loader.warp_generator import WarpGenerator
 from models.example_model import ExampleModel
 from trainers.example_trainer import ExampleTrainer
 from utils.config import process_config
-from utils.dirs import create_dirs
-from utils.logger import Logger
 from utils.argser import get_args
 
 
@@ -15,31 +14,34 @@ def main():
     try:
         args = get_args()
         config = process_config(args.config)
-
     except:
         print("missing or invalid arguments")
         exit(0)
 
-    # create the experiments dirs
-    create_dirs([config.summary_dir, config.checkpoint_dir])
-    # create tensorflow session
 
     # create your data generator
-    data = DataGenerator(config)
+    #generator = WarpGenerator(config)
+    generator = RandomGenerator(config)
 
     graph = tf.Graph()
     # create an instance of the model you want
     with graph.as_default():
+        # create tensorflow session
         sess = tf.Session(graph=graph)
+
+        # create model
         model = ExampleModel(config)
-        # create tensorboard logger
-        logger = Logger(sess, config)
+        # load model if exists
+        if config.load: model.load(sess)
+
         # create trainer and pass all the previous components to it
-        trainer = ExampleTrainer(sess, model, data, config, logger)
-        #load model if exists
-        model.load(sess)
+        trainer = ExampleTrainer(sess, model, generator, config)
         # here you train your model
         trainer.train()
+
+        sess.close()
+
+    generator.close()
 
 
 if __name__ == '__main__':

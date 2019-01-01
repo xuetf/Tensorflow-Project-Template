@@ -8,9 +8,14 @@ class Logger:
         self.config = config
         self.summary_placeholders = {}
         self.summary_ops = {}
-        self.train_summary_writer = tf.summary.FileWriter(os.path.join(self.config.summary_dir, "train"),
-                                                          self.sess.graph)
-        self.test_summary_writer = tf.summary.FileWriter(os.path.join(self.config.summary_dir, "test"))
+
+        train_summary_dir = os.path.join(self.config.summary_dir, "train")
+        os.makedirs(train_summary_dir, exist_ok=True)
+        self.train_summary_writer = tf.summary.FileWriter(train_summary_dir, self.sess.graph)
+
+        test_summary_dir = os.path.join(self.config.summary_dir, "test")
+        os.makedirs(test_summary_dir, exist_ok=True)
+        self.test_summary_writer = tf.summary.FileWriter(test_summary_dir, self.sess.graph)
 
     # it can summarize scalars and images.
     def summarize(self, step, summarizer="train", scope="", summaries_dict=None):

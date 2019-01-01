@@ -4,7 +4,10 @@
   "num_iter_per_epoch": 10,
   "learning_rate": 0.001,
   "batch_size": 16,
-  "state_size": [784],
+  "state_size": 784,
+  "label_num": 10,
   "max_to_keep":5,
-  "seed":1
+  "seed":1,
+  "n_workers":3,
+  "load":false
 }
