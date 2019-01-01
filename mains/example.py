@@ -6,7 +6,7 @@ from trainers.example_trainer import ExampleTrainer
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.logger import Logger
-from utils.utils import get_args
+from utils.argser import get_args
 
 
 def main():
