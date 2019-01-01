@@ -202,11 +202,22 @@ You can also link your Github repository to your comet.ml project for full versi
 I use Json as configuration method and then parse it, so write all configs you want then parse it using "utils/config/process_config" and pass this configuration object to all other objects.
 ### Main
 Here's where you combine all previous part.
+
 1. Parse the config file.
 2. Create a tensorflow session.
 2. Create an instance of "Model", "Data_Generator" and "Logger" and parse the config to all of them.
 3. Create an instance of "Trainer" and pass all previous objects to it.
 4. Now you can train your model by calling "Trainer.train()"
+
+### Running in shell
+
+1. cd mains First
+2. You may need to add your project path to your PYTHONPATH when running in terminal: export PYTHONPATH=/path/to/project/directory:$PYTHONPATH
+3. python3 example.py -c ../config/example.json
+
+
+### Visualize
+tensorboard --logdir=summary_dir
 
 
 # Future Work
