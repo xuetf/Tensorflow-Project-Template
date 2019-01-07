@@ -12,7 +12,3 @@ class TemplateModel(BaseModel):
         # here you build the tensorflow graph of any model you want and also define the loss.
         pass
 
-
-    def set_placeholder(self):
-
-        pass
