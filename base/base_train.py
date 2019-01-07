@@ -2,6 +2,9 @@ import tensorflow as tf
 from utils.logger import Logger
 
 class BaseTrain:
+    '''
+    decoupling the model and trainer
+    '''
     def __init__(self, sess, model, data, config):
         self.model = model
         self.config = config

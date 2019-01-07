@@ -38,7 +38,7 @@ class ExampleModel(BaseModel):
         update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
         with tf.control_dependencies(update_ops):
             return tf.train.AdamOptimizer(self.config.learning_rate)\
-                .minimize(self.loss,global_step=self.global_step)
+                .minimize(self.loss, global_step=self.global_step)
 
 
     @define_scope

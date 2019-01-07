@@ -80,5 +80,11 @@ class BaseModel:
         '''
         override by subclass, should define
             placeholder node, operation node and variable node to construct the graph jointly in decorator style
+
+            Input & output: Placeholder, one-hot
+            Model Parameters: Variable, embedding layer, dense layer, etc...
+            Inference Op (Forward): Operation, Network Structure
+            Optimize Op: (Backward): Optimizer, single-batch-iteration
+
         '''
         raise NotImplementedError
